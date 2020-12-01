@@ -1653,8 +1653,8 @@ class RolloutV1ObjectMeta(RolloutBaseModel):
     uid: Optional[str]
 
 class RolloutV1ResourceRequirements(RolloutBaseModel):
-    limits: Dict[str, str]
-    requests: Dict[str, str]
+    limits: Optional[Dict[str, str]]
+    requests: Optional[Dict[str, str]]
 
 class RolloutV1VolumeMount(RolloutBaseModel):
     mount_path: str
