@@ -1657,12 +1657,12 @@ class RolloutV1ResourceRequirements(RolloutBaseModel):
     requests: Dict[str, str]
 
 class RolloutV1Container(RolloutBaseModel):
-    args: List[str]
+    args: Optional[List[str]]
     command: Optional[List[str]]
     env: Any
     env_from: Any
     image: str
-    image_pull_policy: str
+    image_pull_policy: Optional[str]
     lifecycle: Any
     liveness_probe: Any
     name: str
