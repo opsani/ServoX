@@ -1656,6 +1656,14 @@ class RolloutV1ResourceRequirements(RolloutBaseModel):
     limits: Dict[str, str]
     requests: Dict[str, str]
 
+class RolloutV1VolumeMount(RolloutBaseModel):
+    mount_path: str
+    mount_propagation: Optional[str]
+    name: str
+    read_only: Optional[bool]
+    sub_path: Optional[str]
+    sub_path_expr: Optional[str]
+
 class RolloutV1Container(RolloutBaseModel):
     args: Optional[List[str]]
     command: Optional[List[str]]
@@ -1677,7 +1685,7 @@ class RolloutV1Container(RolloutBaseModel):
     termination_message_policy: Optional[str]
     tty: Optional[bool]
     volume_devices: Any
-    volume_mounts: Any
+    volume_mounts: Optional[List[RolloutV1VolumeMount]]
     working_dir: Optional[str]
 
 class RolloutV1PodSpec(RolloutBaseModel):
@@ -1695,7 +1703,7 @@ class RolloutV1PodSpec(RolloutBaseModel):
     host_pid: Optional[bool]
     hostname: Optional[str]
     image_pull_secrets: Any
-    init_containers: Any
+    init_containers: Optional[List[RolloutV1Container]]
     node_name: Optional[str]
     node_selector: Optional[Dict[str, str]]
     overhead: Optional[Dict[str, str]]
