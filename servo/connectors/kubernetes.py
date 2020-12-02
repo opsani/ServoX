@@ -1674,7 +1674,7 @@ class RolloutV1Container(RolloutBaseModel):
     lifecycle: Any
     liveness_probe: Any
     name: str
-    port: Any
+    ports: Any
     readiness_probe: Any
     resources: RolloutV1ResourceRequirements
     security_context: Any
