@@ -1306,7 +1306,7 @@ class ControllerModel(KubernetesModel, abc.ABC):
 
             canary_pod.obj.metadata.owner_references = [
                kubernetes_asyncio.client.V1OwnerReference(
-                    api_version=servo_dep.metadata.api_version,
+                    api_version=servo_dep.api_version,
                     block_owner_deletion=True,
                     controller=True,  # Ensures the pod will not be adopted by another controller
                     kind="Deployment",
