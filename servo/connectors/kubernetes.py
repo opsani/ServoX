@@ -2384,7 +2384,7 @@ class CanaryOptimization(BaseOptimization):
 
     @classmethod
     async def create(
-        cls, config: "DeploymentConfiguration", **kwargs
+        cls, config: Union["DeploymentConfiguration", "RolloutConfiguration"], **kwargs
     ) -> "CanaryOptimization":
         if isinstance(config, DeploymentConfiguration):
             controller = await Deployment.read(config.name, cast(str, config.namespace))
@@ -2456,7 +2456,7 @@ class CanaryOptimization(BaseOptimization):
             0
         ].resources = self.canary_container.resources
         await dep_copy.delete_canary_pod(raise_if_not_found=False)
-        self.canary = await dep_copy.ensure_canary_pod()
+        self.canary_pod = await dep_copy.ensure_canary_pod()
 
     @property
     def cpu(self) -> CPU:
