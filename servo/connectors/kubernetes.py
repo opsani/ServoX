@@ -1759,10 +1759,10 @@ class RolloutStatusCondition(RolloutBaseModel):
     type: str
 
 class RolloutStatus(RolloutBaseModel):
-    HPA_replicas: int
+    HPA_replicas: Optional[int]
     abort: Optional[bool]
     aborted_at: Optional[datetime]
-    available_replicas: int
+    available_replicas: Optional[int]
     blue_green: RolloutBlueGreenStatus
     canary: Any #  TODO type this out if connector needs to interact with it
     collision_count: Optional[int]
