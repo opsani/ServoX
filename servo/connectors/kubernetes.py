@@ -1676,7 +1676,7 @@ class RolloutV1Container(RolloutBaseModel):
     name: str
     ports: Any
     readiness_probe: Any
-    resources: RolloutV1ResourceRequirements
+    resources: Optional[RolloutV1ResourceRequirements]
     security_context: Any
     startup_probe: Any
     stdin: Optional[bool]
