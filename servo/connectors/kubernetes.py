@@ -2470,7 +2470,12 @@ class CanaryOptimization(BaseOptimization):
         dep_copy = copy.copy(self.target_controller)
         res = self.canary_container.resources
         if isinstance(dep_copy, RolloutBaseModel):
-            res = RolloutV1ResourceRequirements(limits=self.canary_container.resources.limits, requests=self.canary_container.resources.requests)
+            res = RolloutV1ResourceRequirements()
+            if self.canary_container.resources:
+                if self.canary_container.resources.limits:
+                    res.limits = self.canary_container.resources.limits
+                if self.canary_container.resources.requests:
+                    res.requests = self.canary_container.resources.requests
         dep_copy.obj.spec.template.spec.containers[
             0
         ].resources = res
