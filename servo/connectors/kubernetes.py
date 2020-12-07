@@ -2468,6 +2468,10 @@ class CanaryOptimization(BaseOptimization):
 
     async def apply(self) -> None:
         await self.canary_pod.delete()        
+
+        self.logger.debug(f'awaiting deletion of canary Pod "{self.name}"')
+        await self.canary_pod.wait_until_deleted()
+
         # Create the Pod and wait for it to get ready
         self.logger.info(
             f"Creating adjusted canary Pod '{self.canary_pod.metadata.name}' in namespace '{self.canary_pod.metadata.namespace}'"
