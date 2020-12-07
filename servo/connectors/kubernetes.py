@@ -2413,9 +2413,12 @@ class CanaryOptimization(BaseOptimization):
                 canary_pod.logger.info(
                     f"Deleted malformed canary Pod '{canary_pod.name}' from namespace '{canary_pod.namespace}'."
                 )
-                raise ValueError(
-                    f'cannot create CanaryOptimization: target controller "{config.name}" canary pod malformed, unable to locate target container "{container_config.name}"'
-                )
+                canary_pod = await controller.ensure_canary_pod()
+                canary_container = canary_pod.get_container(container_config.name)
+                if not canary_container:
+                    raise ValueError(
+                        f'cannot create CanaryOptimization: target controller "{config.name}" canary pod malformed after recreation, unable to locate target container "{container_config.name}"'
+                    )
 
             name = (
                 config.strategy.alias
