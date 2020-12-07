@@ -2467,20 +2467,22 @@ class CanaryOptimization(BaseOptimization):
             )
 
     async def apply(self) -> None:
-        dep_copy = copy.copy(self.target_controller)
-        res = self.canary_container.resources
-        if isinstance(dep_copy, RolloutBaseModel):
-            res = RolloutV1ResourceRequirements()
-            if self.canary_container.resources:
-                if self.canary_container.resources.limits:
-                    res.limits = self.canary_container.resources.limits
-                if self.canary_container.resources.requests:
-                    res.requests = self.canary_container.resources.requests
-        dep_copy.obj.spec.template.spec.containers[
-            0
-        ].resources = res
-        await dep_copy.delete_canary_pod(raise_if_not_found=False)
-        self.canary_pod = await dep_copy.ensure_canary_pod()
+        await self.canary_pod.delete()        
+        # Create the Pod and wait for it to get ready
+        self.logger.info(
+            f"Creating adjusted canary Pod '{self.canary_pod.metadata.name}' in namespace '{self.canary_pod.metadata.namespace}'"
+        )
+        await self.canary_pod.create()
+
+        self.logger.info(
+            f"Created adjusted canary Pod '{self.canary_pod.metadata.name}' in namespace '{self.canary_pod.metadata.namespace}', waiting for it to become ready..."
+        )
+        await self.canary_pod.wait_until_ready(timeout=600)
+
+        # TODO: Check for unexpected changes to version, etc.
+
+        await self.canary_pod.refresh()
+        await self.canary_pod.get_containers()
 
     @property
     def cpu(self) -> CPU:
