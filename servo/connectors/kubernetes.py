@@ -2514,37 +2514,37 @@ class CanaryOptimization(BaseOptimization):
         is to be modified during optimization.
         """
 
-        # target_name = (
-        #     self.target_container_config.alias
-        #     or f"{self.target_controller_config.name}/{self.target_container_config.name}"
-        # )
-        # # implicitly pin the target settings before we return them
-        # target_cpu = self.target_container_config.cpu.copy(update={"pinned": True})
-        # if value := self.target_container.get_resource_requirements("cpu", first=True):
-        #     target_cpu.value = value
+        target_name = (
+            self.target_container_config.alias
+            or f"{self.target_controller_config.name}/{self.target_container_config.name}"
+        )
+        # implicitly pin the target settings before we return them
+        target_cpu = self.target_container_config.cpu.copy(update={"pinned": True})
+        if value := self.target_container.get_resource_requirements("cpu", first=True):
+            target_cpu.value = value
 
-        # target_memory = self.target_container_config.memory.copy(
-        #     update={"pinned": True}
-        # )
-        # if value := self.target_container.get_resource_requirements(
-        #     "memory", first=True
-        # ):
-        #     target_memory.value = value
+        target_memory = self.target_container_config.memory.copy(
+            update={"pinned": True}
+        )
+        if value := self.target_container.get_resource_requirements(
+            "memory", first=True
+        ):
+            target_memory.value = value
 
-        # target_replicas = self.target_controller_config.replicas.copy(
-        #     update={"pinned": True}
-        # )
-        # target_replicas.value = self.target_controller.replicas
+        target_replicas = self.target_controller_config.replicas.copy(
+            update={"pinned": True}
+        )
+        target_replicas.value = self.target_controller.replicas
 
         return [
-            # Component(
-            #     name=target_name,
-            #     settings=[
-            #         target_cpu,
-            #         target_memory,
-            #         target_replicas,
-            #     ],
-            # ),
+            Component(
+                name=target_name,
+                settings=[
+                    target_cpu,
+                    target_memory,
+                    target_replicas,
+                ],
+            ),
             Component(
                 name=self.name,
                 settings=[
