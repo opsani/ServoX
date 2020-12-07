@@ -2468,9 +2468,12 @@ class CanaryOptimization(BaseOptimization):
 
     async def apply(self) -> None:
         dep_copy = copy.copy(self.target_controller)
+        res = self.canary_container.resources
+        if isinstance(dep_copy, RolloutBaseModel):
+            res = RolloutV1ResourceRequirements(limits=self.canary_container.resources.limits, requests=self.canary_container.resources.requests)
         dep_copy.obj.spec.template.spec.containers[
             0
-        ].resources = self.canary_container.resources
+        ].resources = res
         await dep_copy.delete_canary_pod(raise_if_not_found=False)
         self.canary_pod = await dep_copy.ensure_canary_pod()
 
