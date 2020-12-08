@@ -2168,7 +2168,7 @@ class BaseOptimization(abc.ABC, pydantic.BaseModel, servo.logging.Mixin):
             if mode == FailureMode.CRASH:
                 raise RuntimeError(
                     "an unrecoverable failure occurred while interacting with Kubernetes"
-                )
+                ) from error
 
             elif mode == FailureMode.IGNORE:
                 self.logger.warning(f"ignoring runtime error and continuing: {error}")
