@@ -889,7 +889,7 @@ class Pod(KubernetesModel):
         self.logger.info(f'creating pod "{self.name}" in namespace "{self.namespace}"')
         pod = copy.copy(self.obj)
         pod.metadata = copy.copy(self.obj.metadata)
-        pod.metadata.resourceVersion = None
+        pod.metadata.resource_version = None
         self.logger.trace(f"pod: {pod}")
 
         async with self.preferred_client() as api_client:
@@ -2470,12 +2470,15 @@ class CanaryOptimization(BaseOptimization):
             )
 
     async def apply(self) -> None:
-        await self.canary_pod.delete()        
+        # Copy updated pod state as it will be erased during wait_until_deleted
+        create_obj = copy.deepcopy(self.canary_pod.obj)
+        await self.canary_pod.delete()
 
         self.logger.debug(f'awaiting deletion of canary Pod "{self.name}"')
         await self.canary_pod.wait_until_deleted()
 
         # Create the Pod and wait for it to get ready
+        self.canary_pod.obj = create_obj # restore updated pod state
         self.logger.info(
             f"Creating adjusted canary Pod '{self.canary_pod.obj.metadata.name}' in namespace '{self.canary_pod.obj.metadata.namespace}'"
         )
