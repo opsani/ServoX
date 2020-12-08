@@ -887,12 +887,15 @@ class Pod(KubernetesModel):
             namespace = self.namespace
 
         self.logger.info(f'creating pod "{self.name}" in namespace "{self.namespace}"')
-        self.logger.trace(f"pod: {self.obj}")
+        pod = copy.copy(self.obj)
+        pod.metadata = copy.copy(self.obj.metadata)
+        pod.metadata.resourceVersion = None
+        self.logger.trace(f"pod: {pod}")
 
         async with self.preferred_client() as api_client:
             self.obj = await api_client.create_namespaced_pod(
                 namespace=namespace,
-                body=self.obj,
+                body=pod,
             )
 
     async def patch(self) -> None:
