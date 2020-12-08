@@ -2474,12 +2474,12 @@ class CanaryOptimization(BaseOptimization):
 
         # Create the Pod and wait for it to get ready
         self.logger.info(
-            f"Creating adjusted canary Pod '{self.canary_pod.metadata.name}' in namespace '{self.canary_pod.metadata.namespace}'"
+            f"Creating adjusted canary Pod '{self.canary_pod.obj.metadata.name}' in namespace '{self.canary_pod.obj.metadata.namespace}'"
         )
         await self.canary_pod.create()
 
         self.logger.info(
-            f"Created adjusted canary Pod '{self.canary_pod.metadata.name}' in namespace '{self.canary_pod.metadata.namespace}', waiting for it to become ready..."
+            f"Created adjusted canary Pod '{self.canary_pod.obj.metadata.name}' in namespace '{self.canary_pod.obj.metadata.namespace}', waiting for it to become ready..."
         )
         await self.canary_pod.wait_until_ready(timeout=600)
 
