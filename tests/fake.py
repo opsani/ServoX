@@ -285,8 +285,8 @@ async def servo_get(account: str, app: str, ev: servo.api.Request) -> Union[serv
 # Utilities
 
 METRICS = [
-    servo.Metric("throughput", servo.Unit.requests_per_minute),
-    servo.Metric("error_rate", servo.Unit.percentage),
+    servo.Metric("throughput", servo.Unit.REQUESTS_PER_MINUTE),
+    servo.Metric("error_rate", servo.Unit.PERCENTAGE),
 ]
 
 COMPONENTS = [

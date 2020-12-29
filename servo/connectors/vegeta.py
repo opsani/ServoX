@@ -13,16 +13,16 @@ import pydantic
 import servo
 
 METRICS = [
-    servo.Metric("throughput", servo.Unit.requests_per_minute),
-    servo.Metric("error_rate", servo.Unit.percentage),
-    servo.Metric("latency_total", servo.Unit.milliseconds),
-    servo.Metric("latency_mean", servo.Unit.milliseconds),
-    servo.Metric("latency_50th", servo.Unit.milliseconds),
-    servo.Metric("latency_90th", servo.Unit.milliseconds),
-    servo.Metric("latency_95th", servo.Unit.milliseconds),
-    servo.Metric("latency_99th", servo.Unit.milliseconds),
-    servo.Metric("latency_max", servo.Unit.milliseconds),
-    servo.Metric("latency_min", servo.Unit.milliseconds),
+    servo.Metric("throughput", servo.Unit.REQUESTS_PER_MINUTE),
+    servo.Metric("error_rate", servo.Unit.PERCENTAGE),
+    servo.Metric("latency_total", servo.Unit.MILLISECONDS),
+    servo.Metric("latency_mean", servo.Unit.MILLISECONDS),
+    servo.Metric("latency_50th", servo.Unit.MILLISECONDS),
+    servo.Metric("latency_90th", servo.Unit.MILLISECONDS),
+    servo.Metric("latency_95th", servo.Unit.MILLISECONDS),
+    servo.Metric("latency_99th", servo.Unit.MILLISECONDS),
+    servo.Metric("latency_max", servo.Unit.MILLISECONDS),
+    servo.Metric("latency_min", servo.Unit.MILLISECONDS),
 ]
 
 
@@ -495,12 +495,12 @@ def _summarize_report(report: VegetaReport, config: VegetaConfiguration) -> str:
     def format_metric(value: servo.Numeric, unit: servo.Unit) -> str:
         return f"{value:.2f}{unit.value}"
 
-    throughput = format_metric(report.throughput, servo.Unit.requests_per_minute)
-    error_rate = format_metric(report.error_rate, servo.Unit.percentage)
-    latency_50th = format_metric(report.latencies.p50, servo.Unit.milliseconds)
-    latency_90th = format_metric(report.latencies.p90, servo.Unit.milliseconds)
-    latency_95th = format_metric(report.latencies.p95, servo.Unit.milliseconds)
-    latency_99th = format_metric(report.latencies.p99, servo.Unit.milliseconds)
+    throughput = format_metric(report.throughput, servo.Unit.REQUESTS_PER_MINUTE)
+    error_rate = format_metric(report.error_rate, servo.Unit.PERCENTAGE)
+    latency_50th = format_metric(report.latencies.p50, servo.Unit.MILLISECONDS)
+    latency_90th = format_metric(report.latencies.p90, servo.Unit.MILLISECONDS)
+    latency_95th = format_metric(report.latencies.p95, servo.Unit.MILLISECONDS)
+    latency_99th = format_metric(report.latencies.p99, servo.Unit.MILLISECONDS)
     return f'Vegeta attacking "{config.target}" @ {config.rate}: ~{throughput} ({error_rate} errors) [latencies: 50th={latency_50th}, 90th={latency_90th}, 95th={latency_95th}, 99th={latency_99th}]'
 
 

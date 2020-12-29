@@ -42,11 +42,11 @@ class MeasureConnector(BaseConnector):
         return [
             Metric(
                 name="throughput",
-                unit=Unit.requests_per_minute
+                unit=Unit.REQUESTS_PER_MINUTE
             ),
             Metric(
                 name="error_rate",
-                unit=Unit.requests_per_minute
+                unit=Unit.REQUESTS_PER_MINUTE
             )
         ]
 
@@ -72,7 +72,7 @@ class MeasureConnector(BaseConnector):
                     value=31337,
                     metric=Metric(
                         name="Some Metric",
-                        unit=Unit.requests_per_minute,
+                        unit=Unit.REQUESTS_PER_MINUTE,
                     )
                 )
             ]

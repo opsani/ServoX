@@ -687,14 +687,14 @@ class PrometheusConfiguration(servo.BaseConfiguration):
                 metrics=[
                     PrometheusMetric(
                         "throughput",
-                        servo.Unit.requests_per_second,
+                        servo.Unit.REQUESTS_PER_SECOND,
                         query="rate(http_requests_total[5m])",
                         absent=Absent.ignore,
                         step="1m",
                     ),
                     PrometheusMetric(
                         "error_rate",
-                        servo.Unit.percentage,
+                        servo.Unit.PERCENTAGE,
                         query="rate(errors[5m])",
                         absent=Absent.ignore,
                         step="1m",

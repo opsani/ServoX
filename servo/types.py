@@ -513,26 +513,26 @@ class Unit(str, enum.Enum):
     Member names are the name of the unit and values are an abbreviation of the unit.
 
     ### Members:
-        float: A generic floating point value.
-        int: A generic integer value.
-        count: An unsigned integer count of the number of times something has happened.
-        rate: The frequency of an event across a time interval.
-        percentage: A ratio of one value as compared to another (e.g., errors as compared to
+        FLOAT: A generic floating point value.
+        INT: A generic integer value.
+        COUNT: An unsigned integer count of the number of times something has happened.
+        RATE: The frequency of an event across a time interval.
+        PERCENTAGE: A ratio of one value as compared to another (e.g., errors as compared to
             total requests processed).
-        milliseconds: A time value at millisecond resolution.
-        bytes: Digital data size in bytes.
-        requests_per_minute: Application throughput in terms of requests processed per minute.
-        requests_per_second: Application throughput in terms of requests processed per second.
+        MILLISECONDS: A time value at millisecond resolution.
+        BYTES: Digital data size in bytes.
+        REQUESTS_PER_MINUTE: Application throughput in terms of requests processed per minute.
+        REQUESTS_PER_SECOND: Application throughput in terms of requests processed per second.
     """
-    float = ""
-    int = ""
-    count = ""
-    rate = ""
-    percentage = "%"
-    milliseconds = "ms"
-    bytes = "bytes"
-    requests_per_minute = "rpm"
-    requests_per_second = "rps"
+    FLOAT = ""
+    INT = ""
+    COUNT = ""
+    RATE = ""
+    PERCENTAGE = "%"
+    MILLISECONDS = "ms"
+    BYTES = "bytes"
+    REQUESTS_PER_MINUTE = "rpm"
+    REQUESTS_PER_SECOND = "rps"
 
     def __repr__(self) -> str:
         if self.value:
@@ -555,11 +555,11 @@ class Metric(BaseModel):
     """The name of the metric.
     """
 
-    unit: Unit = Unit.float
+    unit: Unit = Unit.FLOAT
     """The unit that the metric is measured in (e.g., requests per second).
     """
 
-    def __init__(self, name: str, unit: Unit = Unit.float, **kwargs) -> None: # noqa: D107
+    def __init__(self, name: str, unit: Unit = Unit.FLOAT, **kwargs) -> None: # noqa: D107
         super().__init__(name=name, unit=unit, **kwargs)
 
     def __hash__(self):

@@ -258,7 +258,7 @@ class TestEventProgress:
 class TestMeasurement:
     @pytest.fixture
     def metric(self) -> Metric:
-        return Metric("throughput", Unit.requests_per_minute)
+        return Metric("throughput", Unit.REQUESTS_PER_MINUTE)
 
     def test_rejects_empty_data_point(self, metric: Metric) -> None:
         with pytest.raises(ValueError) as e:
@@ -859,7 +859,7 @@ class TestTimeSeries:
     @pytest.fixture
     @freezegun.freeze_time("2020-01-21 12:00:01", auto_tick_seconds=600)
     def time_series(self) -> DataPoint:
-        metric = Metric("throughput", Unit.requests_per_minute)
+        metric = Metric("throughput", Unit.REQUESTS_PER_MINUTE)
         values = (31337.0, 666.0, 187.0, 420.0, 69.0)
         points = list(map(lambda v: DataPoint(metric, datetime.now(), v), values))
         return TimeSeries(metric, points)
@@ -903,13 +903,13 @@ class TestTimeSeries:
         assert new_time_series.data_points[0].time < new_time_series.data_points[-1].time
 
     def test_repr(self, time_series: TimeSeries) -> None:
-        assert repr(time_series) == "TimeSeries(metric=Metric(name='throughput', unit=<Unit.requests_per_minute: 'rpm'>), data_points=[DataPoint(throughput (rpm), (2020-01-21 12:00:01, 31337.0)), DataPoint(throughput (rpm), (2020-01-21 12:10:01, 666.0)), DataPoint(throughput (rpm), (2020-01-21 12:20:01, 187.0)), DataPoint(throughput (rpm), (2020-01-21 12:30:01, 420.0)), DataPoint(throughput (rpm), (2020-01-21 12:40:01, 69.0))], id=None, annotation=None, metadata=None, timespan=(FakeDatetime(2020, 1, 21, 12, 0, 1), FakeDatetime(2020, 1, 21, 12, 40, 1)), duration=Duration('40m'))"
+        assert repr(time_series) == "TimeSeries(metric=Metric(name='throughput', unit=<Unit.REQUESTS_PER_MINUTE: 'rpm'>), data_points=[DataPoint(throughput (rpm), (2020-01-21 12:00:01, 31337.0)), DataPoint(throughput (rpm), (2020-01-21 12:10:01, 666.0)), DataPoint(throughput (rpm), (2020-01-21 12:20:01, 187.0)), DataPoint(throughput (rpm), (2020-01-21 12:30:01, 420.0)), DataPoint(throughput (rpm), (2020-01-21 12:40:01, 69.0))], id=None, annotation=None, metadata=None, timespan=(FakeDatetime(2020, 1, 21, 12, 0, 1), FakeDatetime(2020, 1, 21, 12, 40, 1)), duration=Duration('40m'))"
 
 class TestDataPoint:
     @pytest.fixture
     @freezegun.freeze_time("2020-01-21 12:00:01")
     def data_point(self) -> DataPoint:
-        metric = Metric("throughput", Unit.requests_per_minute)
+        metric = Metric("throughput", Unit.REQUESTS_PER_MINUTE)
         return DataPoint(metric, datetime.now(), 31337.0)
 
     def test_iteration(self, data_point: DataPoint) -> None:
