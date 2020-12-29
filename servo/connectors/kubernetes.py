@@ -969,11 +969,14 @@ class Pod(KubernetesModel):
         # so we only care if the pod is in the 'running' state.
         phase = status.phase
         self.logger.trace(f"current pod phase is {status}")
-        if phase.lower() != "running":
+        if not status.conditions:
             return False
 
         self.logger.trace(f"checking status conditions {status.conditions}")
         for cond in status.conditions:
+            if cond.reason == "Unschedulable": # TODO: should we further constrain this check?
+                raise servo.AdjustmentRejectedError(message=cond.message, reason="scheduling-failed")
+            
             # we only care about the condition type 'ready'
             if cond.type.lower() != "ready":
                 continue
@@ -2169,9 +2172,8 @@ class BaseOptimization(abc.ABC, pydantic.BaseModel, servo.logging.Mixin):
         """
         try:
             if mode == FailureMode.CRASH:
-                raise RuntimeError(
-                    "an unrecoverable failure occurred while interacting with Kubernetes"
-                ) from error
+                self.logger.exception(f"an unrecoverable failure occurred while interacting with Kubernetes: {error.__class__.__name__} - {str(error)}")
+                raise error
 
             elif mode == FailureMode.IGNORE:
                 self.logger.warning(f"ignoring runtime error and continuing: {error}")
@@ -2180,19 +2182,19 @@ class BaseOptimization(abc.ABC, pydantic.BaseModel, servo.logging.Mixin):
 
             elif mode == FailureMode.ROLLBACK:
                 await self.rollback(error)
-                return True
 
             elif mode == FailureMode.DESTROY:
                 await self.destroy(error)
-                return True
 
             else:
                 raise NotImplementedError(
                     f"missing error handler for failure mode '{mode}'"
-                )
-        except Exception as new_error:
-            self.logger.exception(f"handle_error failed with unrecoverable error: {new_error}")
-            print_exc()  # TODO organize this more gracefully in logging
+                ) from error
+
+            raise error # Always communicate errors to backend unless ignored
+
+        except Exception as handler_error:
+            self.logger.exception(f"handle_error failed with unrecoverable error: {handler_error.__class__.__name__} - {str(handler_error)}")
             raise error
 
     @abc.abstractmethod
@@ -2609,19 +2611,13 @@ class CanaryOptimization(BaseOptimization):
 
                 await asyncio.wait_for(self.destroy(), timeout=self.timeout.total_seconds())
 
-                # create a new canary against baseline
-                self.logger.info(
-                    "creating new canary against baseline following failed adjust"
-                )
-                self.canary = await self.target_controller.ensure_canary_pod()
-                return True
+                raise error # Always communicate errors to backend unless ignored
 
             else:
                 return await super().handle_error(error, mode)
-        except Exception as new_error:
-            self.logger.exception(f"handle_error failed with unrecoverable error: {new_error}")
-            print_exc() # TODO organize this more gracefully in logging
-            raise error
+        except Exception as handler_error:
+            self.logger.exception(f"handle_error failed with unrecoverable error: {handler_error.__class__.__name__} - {str(handler_error)}")
+            raise error # Always communicate errors to backend unless ignored
 
     class Config:
         arbitrary_types_allowed = True
