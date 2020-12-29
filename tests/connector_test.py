@@ -93,7 +93,7 @@ class TestLicense:
 class TestMaturity:
     def test_maturity_from_string(self):
         l = Maturity.from_str("Stable")
-        assert l == Maturity.stable
+        assert l == Maturity.STABLE
 
     def test_license_from_string_invalid_raises(self):
         with pytest.raises(NameError) as e:
@@ -646,7 +646,7 @@ def test_vegeta_license() -> None:
 
 
 def test_vegeta_maturity() -> None:
-    assert VegetaConnector.maturity == Maturity.stable
+    assert VegetaConnector.maturity == Maturity.STABLE
 
 
 ## Vegeta CLI tests

@@ -131,7 +131,7 @@ class ServoChecks(servo.checks.BaseChecks):
 @servo.connector.metadata(
     description="Continuous Optimization Orchestrator",
     homepage="https://opsani.com/",
-    maturity=servo.types.Maturity.robust,
+    maturity=servo.types.Maturity.ROBUST,
     license=servo.types.License.APACHE2,
     version=servo.__version__,
     cryptonym=servo.__cryptonym__,

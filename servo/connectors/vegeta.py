@@ -297,7 +297,7 @@ class VegetaChecks(servo.BaseChecks):
     version="0.5.0",
     homepage="https://github.com/opsani/vegeta-connector",
     license=servo.License.APACHE2,
-    maturity=servo.Maturity.stable,
+    maturity=servo.Maturity.STABLE,
 )
 class VegetaConnector(servo.BaseConnector):
     config: VegetaConfiguration

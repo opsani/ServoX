@@ -3108,7 +3108,7 @@ class KubernetesChecks(servo.BaseChecks):
     version="1.5.0",
     homepage="https://github.com/opsani/kubernetes-connector",
     license=servo.License.APACHE2,
-    maturity=servo.Maturity.stable,
+    maturity=servo.Maturity.STABLE,
 )
 class KubernetesConnector(servo.BaseConnector):
     config: KubernetesConfiguration

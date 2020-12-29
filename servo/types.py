@@ -115,7 +115,7 @@ class Maturity(enum.Enum):
     """The Maturity enumeration defines a set of tiers that describe how mature
     and stable a software component is considered by its developers."""
 
-    experimental = "Experimental"
+    EXPERIMENTAL = "Experimental"
     """Experimental components are in an early state of development or are
     otherwise not fully supported by the developers.
 
@@ -123,7 +123,7 @@ class Maturity(enum.Enum):
     and deployment concerns may not yet be fully addressed.
     """
 
-    stable = "Stable"
+    STABLE = "Stable"
     """Stable components can be considered production ready and released under
     Semantic Versioning expectations.
 
@@ -131,7 +131,7 @@ class Maturity(enum.Enum):
     the developers and recommended for use in a production environment.
     """
 
-    robust = "Robust"
+    ROBUST = "Robust"
     """Robust components are fully mature, stable, well documented, and battle
     tested in a variety of production environments.
     """

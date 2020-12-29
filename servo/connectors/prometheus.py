@@ -751,7 +751,7 @@ class PrometheusChecks(servo.BaseChecks):
     version="1.5.0",
     homepage="https://github.com/opsani/prometheus-connector",
     license=servo.License.APACHE2,
-    maturity=servo.Maturity.stable,
+    maturity=servo.Maturity.STABLE,
 )
 class PrometheusConnector(servo.BaseConnector):
     """A servo connector that captures measurements from Prometheus.

@@ -501,7 +501,7 @@ class OpsaniDevChecks(servo.BaseChecks):
     version="0.0.1",
     homepage="https://github.com/opsani/servox",
     license=servo.License.APACHE2,
-    maturity=servo.Maturity.experimental,
+    maturity=servo.Maturity.EXPERIMENTAL,
 )
 class OpsaniDevConnector(servo.BaseConnector):
     """Opsani Dev is a turnkey solution for optimizing a single service."""
@@ -510,7 +510,7 @@ class OpsaniDevConnector(servo.BaseConnector):
     @servo.on_event()
     async def startup(self) -> None:
         servo_ = servo.Servo.current()
-        # if self.maturity == servo.Maturity.experimental:
+        # if self.maturity == servo.Maturity.EXPERIMENTAL:
         #     # Early exit on experimental Opsani Dev bits
         #     return
 
