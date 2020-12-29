@@ -374,8 +374,8 @@ class TestShow:
             assert re.search("METRIC\\s+UNIT\\s+CONNECTORS", result.stdout)
             assert re.search("dev.opsani.com/multi-servox-1", result.stdout)
             assert re.search("dev.opsani.com/multi-servox-2", result.stdout)
-            assert re.search("error_rate\\s+requests_per_minute\\s+\\(rpm\\)\\s+Measure", result.stdout)
-            assert re.search("throughput\\s+requests_per_minute\\s+\\(rpm\\)\\s+Measure", result.stdout)
+            assert re.search("error_rate\\s+REQUESTS_PER_MINUTE\\s+\\(rpm\\)\\s+Measure", result.stdout)
+            assert re.search("throughput\\s+REQUESTS_PER_MINUTE\\s+\\(rpm\\)\\s+Measure", result.stdout)
 
         def test_metrics_by_name(
             self, cli_runner: CliRunner, servo_cli: Typer
@@ -385,8 +385,8 @@ class TestShow:
             assert re.search("METRIC\\s+UNIT\\s+CONNECTORS", result.stdout)
             assert re.search("dev.opsani.com/multi-servox-1", result.stdout) is None
             assert re.search("dev.opsani.com/multi-servox-2", result.stdout)
-            assert re.search("error_rate\\s+requests_per_minute\\s+\\(rpm\\)\\s+Measure", result.stdout)
-            assert re.search("throughput\\s+requests_per_minute\\s+\\(rpm\\)\\s+Measure", result.stdout)
+            assert re.search("error_rate\\s+REQUESTS_PER_MINUTE\\s+\\(rpm\\)\\s+Measure", result.stdout)
+            assert re.search("throughput\\s+REQUESTS_PER_MINUTE\\s+\\(rpm\\)\\s+Measure", result.stdout)
 
 
 def test_version(cli_runner: CliRunner, servo_cli: Typer) -> None:
