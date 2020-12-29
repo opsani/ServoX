@@ -317,7 +317,7 @@ class VegetaConnector(servo.BaseConnector):
     async def check(
         self,
         matching: Optional[servo.CheckFilter] = None,
-        halt_on: Optional[servo.ErrorSeverity] = servo.ErrorSeverity.critical,
+        halt_on: Optional[servo.ErrorSeverity] = servo.ErrorSeverity.CRITICAL,
     ) -> List[servo.Check]:
         # Take the current config and run a 5 second check against it
         check_config = self.config.copy()

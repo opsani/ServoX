@@ -3169,7 +3169,7 @@ class KubernetesConnector(servo.BaseConnector):
     async def check(
         self,
         matching: Optional[servo.CheckFilter],
-        halt_on: Optional[servo.ErrorSeverity] = servo.ErrorSeverity.critical,
+        halt_on: Optional[servo.ErrorSeverity] = servo.ErrorSeverity.CRITICAL,
     ) -> List[servo.Check]:
         return await KubernetesChecks.run(
             self.config, matching=matching, halt_on=halt_on

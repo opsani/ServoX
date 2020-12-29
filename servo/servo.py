@@ -83,7 +83,7 @@ class _EventDefinitions(Protocol):
         matching: Optional[servo.checks.CheckFilter],
         halt_on: Optional[
             servo.types.ErrorSeverity
-        ] = servo.types.ErrorSeverity.critical,
+        ] = servo.types.ErrorSeverity.CRITICAL,
     ) -> List[servo.checks.Check]:
         ...
 
@@ -342,7 +342,7 @@ class Servo(servo.connector.BaseConnector):
     async def check(
         self,
         matching: Optional[servo.checks.CheckFilter],
-        halt_on: Optional[servo.types.ErrorSeverity] = servo.types.ErrorSeverity.critical,
+        halt_on: Optional[servo.types.ErrorSeverity] = servo.types.ErrorSeverity.CRITICAL,
     ) -> List[servo.checks.Check]:
         """Check that the servo is ready to perform optimization.
 

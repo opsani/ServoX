@@ -1186,7 +1186,7 @@ class ServoCLI(CLI):
                 False, "--tag", "-t", help="Filter by tag"
             ),
             halt_on: Optional[servo.ErrorSeverity] = typer.Option(
-                servo.ErrorSeverity.critical,
+                servo.ErrorSeverity.CRITICAL,
                 "--halt-on",
                 "-h",
                 help="Halt running on failure severity",

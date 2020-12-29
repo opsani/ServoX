@@ -765,7 +765,7 @@ class PrometheusConnector(servo.BaseConnector):
     async def check(
         self,
         matching: Optional[servo.CheckFilter] = None,
-        halt_on: Optional[servo.ErrorSeverity] = servo.ErrorSeverity.critical,
+        halt_on: Optional[servo.ErrorSeverity] = servo.ErrorSeverity.CRITICAL,
     ) -> List[servo.Check]:
         """Checks that the configuration is valid and the connector can capture
         measurements from Prometheus.

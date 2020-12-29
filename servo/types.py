@@ -1463,19 +1463,19 @@ class ErrorSeverity(str, enum.Enum):
     """ErrorSeverity is an enumeration the describes the severity of an error
     and establishes semantics about how it should be handled."""
 
-    warning = "warning"
+    WARNING = "warning"
     """Warnings are advisory and do not indicate an inability to operate. By
     default, warnings will not halt execution and emit actionable messages about
     potential problems.
     """
 
-    common = "common"
+    COMMON = "common"
     """Common errors are atomic failures that have no bearing on the outcome of
     other operatios. By default, errors are non-blocking and other available checks
     will be executed.
     """
 
-    critical = "critical"
+    CRITICAL = "critical"
     """Critical errors block the execution of dependent operations.
 
     Critical failures halt the execution of a sequence of checks that are part

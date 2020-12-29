@@ -165,7 +165,7 @@ async def test_check_aborts_on_failed_requirement() -> None:
             return Check(name="1", success=True)
 
         def check_two(self) -> Check:
-            return Check(name="2", success=False, severity=ErrorSeverity.critical)
+            return Check(name="2", success=False, severity=ErrorSeverity.CRITICAL)
 
         def check_three(self) -> Check:
             return Check(name="3", success=True)
@@ -491,7 +491,7 @@ async def test_filtering(name, id, tags, expected_ids) -> None:
 
 
 class RequirementChecks(BaseChecks):
-    @check("required-1", severity=ErrorSeverity.critical)
+    @check("required-1", severity=ErrorSeverity.CRITICAL)
     def check_one(self) -> None:
         ...
 
@@ -522,7 +522,7 @@ class RequirementChecks(BaseChecks):
         # no filter, halt at not-required-2
         (
             None,
-            ErrorSeverity.critical,
+            ErrorSeverity.CRITICAL,
             {
                 "required-1": True,
                 "not-required-1": True,
@@ -546,7 +546,7 @@ class RequirementChecks(BaseChecks):
         # run not-required-1, trigger 1 requirement, no failures
         (
             "not-required-1",
-            ErrorSeverity.critical,
+            ErrorSeverity.CRITICAL,
             {"not-required-1": True, "required-1": True},
         ),
         # run not-required-2, trigger 1 requirement, fail
@@ -554,7 +554,7 @@ class RequirementChecks(BaseChecks):
         # run required-3, trigger 2 requirements, halt at required-2
         (
             "not-required-3",
-            ErrorSeverity.critical,
+            ErrorSeverity.CRITICAL,
             {"required-1": True, "required-2": False},
         ),
         # run all required-3, trigger 2 requirements, required-2 fails
@@ -571,7 +571,7 @@ class RequirementChecks(BaseChecks):
         # run not-required-1 and not-required-3
         (
             ("not-required-1", "not-required-3"),
-            ErrorSeverity.critical,
+            ErrorSeverity.CRITICAL,
             {
                 "required-1": True,
                 "not-required-1": True,
@@ -869,7 +869,7 @@ async def test_handles_method_attrs() -> None:
 
 
 class WarningChecks(BaseChecks):
-    @check("warning-1", severity=ErrorSeverity.warning)
+    @check("warning-1", severity=ErrorSeverity.WARNING)
     def check_one(self) -> None:
         raise RuntimeError("Failure")
 
