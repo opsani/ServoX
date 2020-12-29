@@ -2070,23 +2070,23 @@ class BaseOptimization(abc.ABC, pydantic.BaseModel, servo.logging.Mixin):
             NotImplementedError: Raised if there is no handler for a given failure mode. Subclasses
                 must filter failure modes before calling the superclass implementation.
         """
-        if mode == FailureMode.crash:
+        if mode == FailureMode.CRASH:
             raise RuntimeError(
                 "an unrecoverable failure occurred while interacting with Kubernetes"
             ) from error
 
         # Ensure that we chain any underlying exceptions that may occur
         try:
-            if mode == FailureMode.ignore:
+            if mode == FailureMode.IGNORE:
                 self.logger.warning(f"ignoring runtime error and continuing: {error}")
                 self.logger.opt(exception=error).exception("ignoring Kubernetes error")
                 return True
 
-            elif mode == FailureMode.rollback:
+            elif mode == FailureMode.ROLLBACK:
                 await self.rollback(error)
                 return True
 
-            elif mode == FailureMode.destroy:
+            elif mode == FailureMode.DESTROY:
                 await self.destroy(error)
                 return True
 
@@ -2516,10 +2516,10 @@ class CanaryOptimization(BaseOptimization):
         self.logger.info(f'destroyed canary Pod "{self.name}"')
 
     async def handle_error(self, error: Exception, mode: "FailureMode") -> bool:
-        if mode == FailureMode.rollback or mode == FailureMode.destroy:
+        if mode == FailureMode.ROLLBACK or mode == FailureMode.DESTROY:
             # Ensure that we chain any underlying exceptions that may occur
             try:
-                if mode == FailureMode.rollback:
+                if mode == FailureMode.ROLLBACK:
                     self.logger.warning(
                         f"cannot rollback a canary Pod: falling back to destroy: {error}"
                     )
@@ -2822,10 +2822,10 @@ class FailureMode(str, enum.Enum):
     The FailureMode enumeration defines how to handle a failed adjustment of a Kubernetes resource.
     """
 
-    rollback = "rollback"
-    destroy = "destroy"
-    ignore = "ignore"
-    crash = "crash"
+    ROLLBACK = "rollback"
+    DESTROY = "destroy"
+    IGNORE = "ignore"
+    CRASH = "crash"
 
     @classmethod
     def options(cls) -> List[str]:
@@ -2886,7 +2886,7 @@ class BaseKubernetesConfiguration(servo.BaseConfiguration):
         description="Duration to observe the application after an adjust to ensure the deployment is stable. May be overridden by optimizer supplied `control.adjust.settlement` value."
     )
     on_failure: FailureMode = pydantic.Field(
-        FailureMode.crash,
+        FailureMode.CRASH,
         description=f"How to handle a failed adjustment. Options are: {servo.utilities.strings.join_to_series(list(FailureMode.__members__.values()))}",
     )
     timeout: Optional[servo.Duration] = pydantic.Field(
