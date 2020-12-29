@@ -82,7 +82,7 @@ class TestOptimizer:
 class TestLicense:
     def test_license_from_string(self):
         l = License.from_str("MIT")
-        assert l == License.mit
+        assert l == License.MIT
 
     def test_license_from_string_invalid_raises(self):
         with pytest.raises(NameError) as e:
@@ -642,7 +642,7 @@ def test_vegeta_homepage() -> None:
 
 
 def test_vegeta_license() -> None:
-    assert VegetaConnector.license == License.apache2
+    assert VegetaConnector.license == License.APACHE2
 
 
 def test_vegeta_maturity() -> None:

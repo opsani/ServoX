@@ -500,7 +500,7 @@ class OpsaniDevChecks(servo.BaseChecks):
     description="Run connectors in a specific formation",
     version="0.0.1",
     homepage="https://github.com/opsani/servox",
-    license=servo.License.apache2,
+    license=servo.License.APACHE2,
     maturity=servo.Maturity.experimental,
 )
 class OpsaniDevConnector(servo.BaseConnector):

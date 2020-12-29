@@ -296,7 +296,7 @@ class VegetaChecks(servo.BaseChecks):
     description="Vegeta load testing connector",
     version="0.5.0",
     homepage="https://github.com/opsani/vegeta-connector",
-    license=servo.License.apache2,
+    license=servo.License.APACHE2,
     maturity=servo.Maturity.stable,
 )
 class VegetaConnector(servo.BaseConnector):

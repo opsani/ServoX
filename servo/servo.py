@@ -132,7 +132,7 @@ class ServoChecks(servo.checks.BaseChecks):
     description="Continuous Optimization Orchestrator",
     homepage="https://opsani.com/",
     maturity=servo.types.Maturity.robust,
-    license=servo.types.License.apache2,
+    license=servo.types.License.APACHE2,
     version=servo.__version__,
     cryptonym=servo.__cryptonym__,
 )

@@ -93,9 +93,9 @@ class License(enum.Enum):
     """The License enumeration defines a set of licenses that describe the
     terms under which software components are released for use."""
 
-    mit = "MIT"
-    apache2 = "Apache 2.0"
-    proprietary = "Proprietary"
+    MIT = "MIT"
+    APACHE2 = "Apache 2.0"
+    PROPRIETARY = "Proprietary"
 
     @classmethod
     def from_str(cls, identifier: str) -> "License":

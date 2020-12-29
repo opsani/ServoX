@@ -3107,7 +3107,7 @@ class KubernetesChecks(servo.BaseChecks):
     description="Kubernetes adjust connector",
     version="1.5.0",
     homepage="https://github.com/opsani/kubernetes-connector",
-    license=servo.License.apache2,
+    license=servo.License.APACHE2,
     maturity=servo.Maturity.stable,
 )
 class KubernetesConnector(servo.BaseConnector):
