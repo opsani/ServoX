@@ -1120,7 +1120,7 @@ class Replicas(RangeSetting):
 class InstanceTypeUnits(str, enum.Enum):
     """InstanceTypeUnits is an enumeration that defines sources of compute instances."""
 
-    ec2 = "ec2"
+    EC2 = "ec2"
 
 
 class InstanceType(EnumSetting):
@@ -1139,7 +1139,7 @@ class InstanceType(EnumSetting):
         description="Identifies the setting as an instance type enum setting.",
     )
     unit: InstanceTypeUnits = pydantic.Field(
-        InstanceTypeUnits.ec2,
+        InstanceTypeUnits.EC2,
         description="The unit of instance types identifying the provider.",
     )
 

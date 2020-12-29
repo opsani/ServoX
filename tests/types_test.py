@@ -837,7 +837,7 @@ class TestInstanceType:
     def test_validate_name_cannot_be_changed(self) -> None:
         with pytest.raises(pydantic.ValidationError) as error:
             InstanceType(
-                name="other", values=["this", "that"], unit=InstanceTypeUnits.ec2
+                name="other", values=["this", "that"], unit=InstanceTypeUnits.EC2
             )
 
         assert error
@@ -851,7 +851,7 @@ class TestInstanceType:
     def test_validate_unit(self) -> None:
         field = InstanceType.__fields__["unit"]
         assert field.type_ == InstanceTypeUnits
-        assert field.default == InstanceTypeUnits.ec2
+        assert field.default == InstanceTypeUnits.EC2
         assert field.required == False
         assert field.allow_none == False
 
