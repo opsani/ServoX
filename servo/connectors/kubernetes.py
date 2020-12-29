@@ -2571,13 +2571,13 @@ class KubernetesOptimizations(pydantic.BaseModel, servo.logging.Mixin):
         pod_tmpl_specs = {}
 
         for deployment_config in config.deployments:
-            if deployment_config.strategy == OptimizationStrategy.default:
+            if deployment_config.strategy == OptimizationStrategy.DEFAULT:
                 optimization = await DeploymentOptimization.create(
                     deployment_config, timeout=config.timeout
                 )
                 deployment = optimization.deployment
                 container = optimization.container
-            elif deployment_config.strategy == OptimizationStrategy.canary:
+            elif deployment_config.strategy == OptimizationStrategy.CANARY:
                 optimization = await CanaryOptimization.create(
                     deployment_config, timeout=config.timeout
                 )
@@ -2786,11 +2786,11 @@ class OptimizationStrategy(str, enum.Enum):
     OptimizationStrategy is an enumeration of the possible ways to perform optimization on a Kubernetes Deployment.
     """
 
-    default = "default"
+    DEFAULT = "default"
     """The default strategy directly applies adjustments to the target Deployment and its containers.
     """
 
-    canary = "canary"
+    CANARY = "canary"
     """The canary strategy creates a servo managed standalone canary Pod based on the target Deployment and makes
     adjustments to it instead of the Deployment itself.
     """
@@ -2809,11 +2809,11 @@ class BaseOptimizationStrategyConfiguration(pydantic.BaseModel):
 
 
 class DefaultOptimizationStrategyConfiguration(BaseOptimizationStrategyConfiguration):
-    type = pydantic.Field(OptimizationStrategy.default, const=True)
+    type = pydantic.Field(OptimizationStrategy.DEFAULT, const=True)
 
 
 class CanaryOptimizationStrategyConfiguration(BaseOptimizationStrategyConfiguration):
-    type = pydantic.Field(OptimizationStrategy.canary, const=True)
+    type = pydantic.Field(OptimizationStrategy.CANARY, const=True)
     alias: Optional[ContainerTagName]
 
 
@@ -2908,7 +2908,7 @@ class DeploymentConfiguration(BaseKubernetesConfiguration):
 
     name: DNSSubdomainName
     containers: List[ContainerConfiguration]
-    strategy: StrategyTypes = OptimizationStrategy.default
+    strategy: StrategyTypes = OptimizationStrategy.DEFAULT
     replicas: servo.Replicas
 
 
