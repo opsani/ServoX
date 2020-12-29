@@ -627,16 +627,16 @@ class NormalizationPolicy(str, enum.Enum):
     are normalized before being reported to the optimizer.
 
     Members:
-        passthrough: Measurements are reported as is returned by the connectors
+        PASSTHROUGH: Measurements are reported as is returned by the connectors
             without applying any normalization routines.
-        intersect: Measurements are reduced to a common set of interesecting
+        INTERSECT: Measurements are reduced to a common set of interesecting
             time series data. Data points measured at times that do not have
             data points across all time series in the measurement are dropped.
-        fill: Time series in the measurement are brought into alignment by
+        FILL: Time series in the measurement are brought into alignment by
     """
-    passthrough = "passthrough"
-    intersect = "intersect"
-    fill = "fill"
+    PASSTHROUGH = "passthrough"
+    INTERSECT = "intersect"
+    FILL = "fill"
 
 class TimeSeries(BaseModel):
     """TimeSeries objects models a sequence of data points containing
