@@ -312,8 +312,8 @@ class Status(str, enum.Enum):
 
     See https://prometheus.io/docs/prometheus/latest/querying/api/#format-overview
     """
-    success = "success"
-    error = "error"
+    SUCCESS = "success"
+    ERROR = "error"
 
 
 class Error(pydantic.BaseModel):
@@ -418,7 +418,7 @@ class BaseResponse(pydantic.BaseModel, abc.ABC):
 
     def raise_for_error(self) -> None:
         """Raise an error if the request was not successful."""
-        if self.status == Status.error:
+        if self.status == Status.ERROR:
             raise RuntimeError(f"Prometheus query request failed with error '{self.error.type}': {self.error.message}")
 
 
@@ -462,7 +462,7 @@ class MetricResponse(BaseResponse):
         Response data containing vector and matrix results are serialized into
         `TimeSeries` objects. Scalar and string results are serialized into `DataPoint`.
         """
-        if self.status == Status.error:
+        if self.status == Status.ERROR:
             return None
         elif not self.data:
             return []
