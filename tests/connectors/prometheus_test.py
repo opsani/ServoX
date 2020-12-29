@@ -844,7 +844,7 @@ class TestData:
         def test_parse(self, obj) -> None:
             data = pydantic.parse_obj_as(servo.connectors.prometheus.Data, obj)
             assert data
-            assert data.result_type == servo.connectors.prometheus.ResultType.vector
+            assert data.result_type == servo.connectors.prometheus.ResultType.VECTOR
             assert len(data) == 2
 
         def test_iterate(self, obj) -> None:
@@ -891,7 +891,7 @@ class TestData:
         def test_parse(self, obj) -> None:
             data = pydantic.parse_obj_as(servo.connectors.prometheus.Data, obj)
             assert data
-            assert data.result_type == servo.connectors.prometheus.ResultType.matrix
+            assert data.result_type == servo.connectors.prometheus.ResultType.MATRIX
             assert len(data) == 2
 
         def test_iterate(self, obj) -> None:
@@ -924,7 +924,7 @@ class TestData:
         def test_parse(self, obj) -> None:
             data = pydantic.parse_obj_as(servo.connectors.prometheus.Data, obj)
             assert data
-            assert data.result_type == servo.connectors.prometheus.ResultType.scalar
+            assert data.result_type == servo.connectors.prometheus.ResultType.SCALAR
             assert len(data) == 1
 
         def test_iterate(self, obj) -> None:
@@ -945,7 +945,7 @@ class TestData:
         def test_parse(self, obj) -> None:
             data = pydantic.parse_obj_as(servo.connectors.prometheus.Data, obj)
             assert data
-            assert data.result_type == servo.connectors.prometheus.ResultType.string
+            assert data.result_type == servo.connectors.prometheus.ResultType.STRING
             assert len(data) == 1
 
         def test_iterate(self, obj) -> None:

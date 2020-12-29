@@ -232,17 +232,17 @@ class ResultType(str, enum.Enum):
     See https://prometheus.io/docs/prometheus/latest/querying/api/#expression-query-result-formats
 
     ### Members:
-        matrix: A result consisting of an array of objects with metric and values attributes
+        MATRIX: A result consisting of an array of objects with metric and values attributes
             describing a time series of scalar measurements.
-        vector: A result consisting of an array of objects with metric and value attributes
+        VECTOR: A result consisting of an array of objects with metric and value attributes
             describing a single scalar measurement.
-        scalar: A result consisting of a time and a numeric value encoded as a string.
-        string: A result consisting of a time and a string value.
+        SCALAR: A result consisting of a time and a numeric value encoded as a string.
+        STRING: A result consisting of a time and a string value.
     """
-    matrix = "matrix"
-    vector = "vector"
-    scalar = "scalar"
-    string = "string"
+    MATRIX = "matrix"
+    VECTOR = "vector"
+    SCALAR = "scalar"
+    STRING = "string"
 
 
 Scalar = Tuple[datetime.datetime, float]
@@ -363,12 +363,12 @@ class QueryData(pydantic.BaseModel):
     @property
     def is_vector(self) -> bool:
         """Returns True when the result is a vector or matrix."""
-        return self.result_type in (servo.connectors.prometheus.ResultType.vector, servo.connectors.prometheus.ResultType.matrix)
+        return self.result_type in (servo.connectors.prometheus.ResultType.VECTOR, servo.connectors.prometheus.ResultType.MATRIX)
 
     @property
     def is_value(self) -> bool:
         """Returns True when the result is a scalar or string."""
-        return self.result_type in (servo.connectors.prometheus.ResultType.scalar, servo.connectors.prometheus.ResultType.string)
+        return self.result_type in (servo.connectors.prometheus.ResultType.SCALAR, servo.connectors.prometheus.ResultType.STRING)
 
 class TargetData(pydantic.BaseModel):
     """The data component of a response from the targets endpoint of the Prometheus HTTP API.
@@ -602,7 +602,7 @@ class Client(pydantic.BaseModel):
         response = await self.query(query)
         servo.logger.debug(f"Absent metric introspection returned {query}: {response}")
         if response.data:
-            if response.data.result_type != servo.connectors.prometheus.ResultType.vector:
+            if response.data.result_type != servo.connectors.prometheus.ResultType.VECTOR:
                 raise TypeError(f"expected a vector result but found {response.data.result_type}")
             if len(response.data) != 1:
                 raise ValueError(f"expected a single result vector but found {len(response.data)}")

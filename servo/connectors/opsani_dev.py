@@ -410,7 +410,7 @@ class OpsaniDevChecks(servo.BaseChecks):
 
             response = await client.query(metric)
             if response.data:
-                assert response.data.result_type == servo.connectors.prometheus.ResultType.vector, f"expected a vector result but found {results.data.result_type}"
+                assert response.data.result_type == servo.connectors.prometheus.ResultType.VECTOR, f"expected a vector result but found {results.data.result_type}"
                 assert len(response.data) == 1, f"expected Prometheus API to return a single result for metric '{metric.name}' but found {len(results.data)}"
                 result = response.data[0]
 
@@ -485,7 +485,7 @@ class OpsaniDevChecks(servo.BaseChecks):
         summaries = []
         for metric in metrics:
             response = await client.query(metric)
-            assert response.data.result_type == servo.connectors.prometheus.ResultType.vector, f"expected a vector result but found {response.data.result_type}"
+            assert response.data.result_type == servo.connectors.prometheus.ResultType.VECTOR, f"expected a vector result but found {response.data.result_type}"
             assert len(response.data) == 1, f"expected Prometheus API to return a single result for metric '{metric.name}' but found {len(response.data)}"
 
             result = response.data[0]
